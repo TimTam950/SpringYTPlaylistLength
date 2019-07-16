@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>YouTube Playlist Length</title>
+</head>
+<body>
+
+	<h1>YouTube PlayList Length Tool</h1>
+	
+	<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
+    	<p>URL: <input type="text" th:field="*{text}" /></p>
+    	<p><input type="submit" value="Submit" />
+	</form>
+
+</body>
+</html>
