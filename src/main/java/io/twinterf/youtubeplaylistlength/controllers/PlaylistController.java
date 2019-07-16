@@ -25,9 +25,10 @@ public class PlaylistController {
 		return "hello";
 	}
 	
-//	@GetMapping("/testCrawler")
-//	public @ResponseBody String testCrawler() {
-//		crawler.getHtml("https://www.youtube.com/playlist?list=PL0qTfdf9DoTgQDG61aOO90_bMUK0XOXMS");
-//		return "success";
-//	}
+	@GetMapping("/testCrawler")
+	public @ResponseBody String testCrawler() {
+		String length = crawler.getLength("https://www.youtube.com/playlist?list=PL0qTfdf9DoTgQDG61aOO90_bMUK0XOXMS");
+		System.out.println(length);
+		return "success";
+	}
 }

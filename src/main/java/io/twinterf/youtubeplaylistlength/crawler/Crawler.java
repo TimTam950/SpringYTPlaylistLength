@@ -1,31 +1,53 @@
 package io.twinterf.youtubeplaylistlength.crawler;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Crawler {
 	
 	public String getLength(String url) {
-		String length = null;
 		Document doc;
+		Elements elements = new Elements();
+		Pattern p = Pattern.compile("([0-9]+):([0-9]{2})");
+		ArrayList<Integer> minutes = new ArrayList<>();
+		ArrayList<Integer> seconds = new ArrayList<>();
 		try {
-			doc = Jsoup.connect(url).get();
-			Elements elements = doc.getElementsByClass("timestamp");
+			doc = Jsoup.connect("https://www.youtube.com/playlist?list=PL0qTfdf9DoTgQDG61aOO90_bMUK0XOXMS").get();
+			elements = doc.getElementsByClass("timestamp");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		elements.forEach((e) ->{
+			Matcher m = p.matcher(e.text());
+			if (m.find()) {
+				minutes.add(Integer.parseInt(m.group(1)));
+				seconds.add(Integer.parseInt(m.group(2)));
+			}
+			
+		});
+		
+		int totalSeconds = 0;
+		for(int i = 0; i < minutes.size(); i++) {
+			totalSeconds = totalSeconds + (minutes.get(i) * 60) + seconds.get(i);
+		}
+		
+		int finalHours = totalSeconds / 3600;
+		int finalMinutes = (totalSeconds % 3600) / 60;
+		int finalSeconds = totalSeconds % 60;
 
-		return length;
+		String timeString = String.format("%02d:%02d:%02d", finalHours, finalMinutes, finalSeconds);
+		
+		return timeString;
 	}
 	
 	
