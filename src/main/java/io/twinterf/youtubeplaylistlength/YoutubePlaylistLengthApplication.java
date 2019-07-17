@@ -8,9 +8,8 @@ import org.springframework.context.ApplicationContext;
 public class YoutubePlaylistLengthApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(YoutubePlaylistLengthApplication.class, args);
-		
-		
+		SpringApplication.run(YoutubePlaylistLengthApplication.class, args);
+
 	}
 
 }

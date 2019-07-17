@@ -20,7 +20,7 @@ public class Crawler {
 		ArrayList<Integer> minutes = new ArrayList<>();
 		ArrayList<Integer> seconds = new ArrayList<>();
 		try {
-			doc = Jsoup.connect("https://www.youtube.com/playlist?list=PL0qTfdf9DoTgQDG61aOO90_bMUK0XOXMS").get();
+			doc = Jsoup.connect(url).get();
 			elements = doc.getElementsByClass("timestamp");
 			
 		} catch (IOException e) {

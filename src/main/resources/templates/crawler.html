@@ -3,15 +3,23 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>YouTube Playlist Length</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/css/crawler.css}"/>
 </head>
-<body>
+<body style="background-color:red;">
 
-	<h1>YouTube PlayList Length Tool</h1>
-	
-	<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
-    	<p>URL: <input type="text" th:field="*{text}" /></p>
-    	<p><input type="submit" value="Submit" />
-	</form>
+	<div class="container">
+		<div class="inner">
+			<h1>YouTube PlayList Length Tool</h1>
+			
+			<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
+		    	<p>URL: <input type="text" th:field="${inputString.text}" /></p>
+		    	<p><input type="submit" value="Submit" />
+			</form>
+			
+			<p th:text="${crawlerResult != null} ? ${crawlerResult} : ''"></p>
+		</div>
+	</div>
 
 </body>
 </html>

@@ -30,23 +30,10 @@ public class PlaylistController {
 	}
 	
 	@PostMapping("/")
-	public String getLength(@ModelAttribute InputString inputString) {
+	public String getLength(@ModelAttribute InputString inputString, Model model) {
 		String url = inputString.getText();
-		System.out.println(crawler.getLength(url));
+		model.addAttribute("crawlerResult", crawler.getLength(url));
 		return "crawler";
 	}
 
-	@GetMapping(path="/testPutIntoDatabase")
-	public @ResponseBody String testPutIntoDatabase() {
-		Playlist p = new Playlist("url", "3:00:00", 0);
-		playlistRepository.save(p);
-		return "hello";
-	}
-	
-	@GetMapping("/testCrawler")
-	public @ResponseBody String testCrawler() {
-		String length = crawler.getLength("https://www.youtube.com/playlist?list=PL0qTfdf9DoTgQDG61aOO90_bMUK0XOXMS");
-		System.out.println(length);
-		return "success";
-	}
 }
