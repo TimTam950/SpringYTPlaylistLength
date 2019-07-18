@@ -1,3 +1,6 @@
 .inner {
 	background-color: white;
+	margin: 20px 0px 0px 0px;
+	border-radius: 25px;
+	border: 2px solid black;
 }

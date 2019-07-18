@@ -9,15 +9,18 @@
 <body style="background-color:red;">
 
 	<div class="container">
-		<div class="inner">
-			<h1>YouTube PlayList Length Tool</h1>
+		<div class="row">
+			<div class="col-12 inner" align="center">
+				<h1>YouTube PlayList Length Tool</h1>
+				
+				<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
+			    	<p>Paste your URL here: <input type="text" th:field="${inputString.text}" class="form-control"/></p>
+			    	<p><input type="submit" value="Submit" class="btn btn-outline-danger"/>
+				</form>
+				
+				<p th:text="${crawlerResult != null} ? ${crawlerResult} : ''"></p>
+			</div>
 			
-			<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
-		    	<p>URL: <input type="text" th:field="${inputString.text}" /></p>
-		    	<p><input type="submit" value="Submit" />
-			</form>
-			
-			<p th:text="${crawlerResult != null} ? ${crawlerResult} : ''"></p>
 		</div>
 	</div>
 

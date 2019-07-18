@@ -1,5 +1,7 @@
 package io.twinterf.youtubeplaylistlength.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +34,24 @@ public class PlaylistController {
 	@PostMapping("/")
 	public String getLength(@ModelAttribute InputString inputString, Model model) {
 		String url = inputString.getText();
-		model.addAttribute("crawlerResult", crawler.getLength(url));
-		return "crawler";
+		if (playlistRepository.existsById(url)) {
+			Playlist playlist = playlistRepository.findById(url).orElse(null);
+			if(playlist.getFlag().equals(0)) {
+				playlist.setFlag(1);
+				model.addAttribute("crawlerResult", playlist.getLength());
+				playlistRepository.save(playlist);
+				return "crawler";
+			} else {
+				model.addAttribute("crawlerResult", playlist.getLength());
+				return "crawler";
+			}
+		} else {
+			Playlist playlist = new Playlist(url, crawler.getLength(url), 0);
+			model.addAttribute("crawlerResult", playlist.getLength());
+			playlistRepository.save(playlist);
+			return "crawler";
+		}
+		
 	}
 
 }
