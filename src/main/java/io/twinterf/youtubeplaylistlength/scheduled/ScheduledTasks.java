@@ -1,22 +1,29 @@
 package io.twinterf.youtubeplaylistlength.scheduled;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import io.twinterf.youtubeplaylistlength.entities.Playlist;
+import io.twinterf.youtubeplaylistlength.repositories.PlaylistRepository;
 
 @Component
 public class ScheduledTasks {
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-    @Scheduled(fixedRate = 5000)
+	@Autowired
+    private PlaylistRepository playlistRepository;
+	
+    @Scheduled(cron = "0 0 4 * * *")
     public void reportCurrentTime() {
-        log.info("The time is now {}", dateFormat.format(new Date()));
+        Iterable<Playlist> playLists = playlistRepository.findAll();
+        
+        for(Playlist playlist: playLists) {
+        	if(playlist.getFlag() == 0) {
+        		playlistRepository.delete(playlist);
+        	} else {
+        		playlist.setFlag(0);
+        		playlistRepository.save(playlist);
+        	}
+        }
     }
 }
