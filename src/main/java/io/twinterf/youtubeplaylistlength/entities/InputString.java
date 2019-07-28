@@ -1,7 +1,10 @@
 package io.twinterf.youtubeplaylistlength.entities;
 
+import javax.validation.constraints.Pattern;
+
 public class InputString {
 
+	@Pattern(regexp="^https:\\/\\/www\\.youtube\\.com\\/playlist\\?list=[A-Za-z0-9_-]*$", message="Please enter a playlist URL")
 	private String text;
 
 	public InputString() {
