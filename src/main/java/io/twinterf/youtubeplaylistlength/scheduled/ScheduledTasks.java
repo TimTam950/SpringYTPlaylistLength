@@ -13,7 +13,7 @@ public class ScheduledTasks {
 	@Autowired
     private PlaylistRepository playlistRepository;
 	
-    @Scheduled(cron = "	0 0 4 1 1/1 ? *")
+    @Scheduled(cron = "	0 0 4 1 1/1 ?")
     public void reportCurrentTime() {
         Iterable<Playlist> playLists = playlistRepository.findAll();
         
