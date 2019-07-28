@@ -1,14 +1,14 @@
 package io.twinterf.youtubeplaylistlength.controllers;
 
-import java.util.Optional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.twinterf.youtubeplaylistlength.crawler.Crawler;
 import io.twinterf.youtubeplaylistlength.entities.InputString;
@@ -32,7 +32,12 @@ public class PlaylistController {
 	}
 	
 	@PostMapping("/")
-	public String getLength(@ModelAttribute InputString inputString, Model model) {
+	public String getLength(@Valid @ModelAttribute("inputString") InputString inputString, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("Input Error");
+			return "crawler";
+		}
+		
 		String url = inputString.getText();
 		if (playlistRepository.existsById(url)) {
 			Playlist playlist = playlistRepository.findById(url).orElse(null);

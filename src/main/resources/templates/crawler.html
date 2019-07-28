@@ -15,6 +15,7 @@
 				
 				<form action="#" th:action="@{/}" th:object="${inputString}" method="post">
 			    	<p>Paste your URL here: <input type="text" th:field="${inputString.text}" class="form-control"/></p>
+			    	<p th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="alert alert-warning"></p>
 			    	<p><input type="submit" value="Submit" class="btn btn-outline-danger"/>
 				</form>
 				
